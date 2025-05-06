@@ -1,6 +1,8 @@
 from flask import Flask, request, render_template
 from Sentimentanal import analyze_sentiment  # Import the function from Sentimentanal.py
 import os  # Import os to access environment variables
+import nltk
+nltk.download('punkt_tab')
 
 app = Flask(__name__)
 
