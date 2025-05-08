@@ -2,19 +2,81 @@
 <html>
 <head>
     <title>Sentiment Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #ffffff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+        h1 {
+            color: #333333;
+        }
+        label {
+            font-size: 16px;
+            color: #555555;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .output {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .output h3 {
+            color: #333333;
+        }
+        .output p {
+            color: #555555;
+        }
+    </style>
 </head>
 <body>
-<h1>Sentiment Analysis Form</h1>
-<form action="/" method="POST">
-    <label for="userInput">Enter the text you want analyzed:</label><br><br>
-    <input type="text" id="userInput" name="userInput" required><br><br>
-    <button type="submit">Submit</button>
-</form>
-<br>
-{% if output and user_input %}
-<h3>Output:</h3>
-<p>Input: {{ user_input }}</p>
-<p>Analysis: {{ output }}</p>
-{% endif %}
+<div class="container">
+    <h1>Sentiment Analysis Form</h1>
+    <form action="/" method="POST">
+        <label for="userInput">Enter the text you want analyzed:</label><br><br>
+        <input type="text" id="userInput" name="userInput" required><br><br>
+        <button type="submit">Submit</button>
+    </form>
+    <br>
+    {% if output and user_input %}
+    <div class="output">
+        <h3>Output:</h3>
+        <p><strong>Input:</strong> {{ user_input }}</p>
+        <p><strong>Analysis:</strong> {{ output }}</p>
+    </div>
+    {% endif %}
+</div>
 </body>
 </html>
