@@ -5,12 +5,12 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-import zipfile
+import zipfile 
 import os #needed to handle file paths
-import joblib  # Import joblib for saving/loading models
+import joblib  # Import joblib for saving/loading training
 import re
 
-def preprocess_text(text):
+def preprocess_text(text): # this adds not to the vectorizer so "not good" is detected as a negative review instead of a positive review
     # Tokenize the text
     tokens = word_tokenize(text)
     negation_words = {'not', "n't", 'no', 'never'}
@@ -35,10 +35,11 @@ current_folder = os.path.dirname(__file__)
 model_path = os.path.join(current_folder, 'sentiment_model.pkl')
 vectorizer_path = os.path.join(current_folder, 'vectorizer.pkl')
 
-if os.path.exists(model_path) and os.path.exists(vectorizer_path):
+if os.path.exists(model_path) and os.path.exists(vectorizer_path): #if there is saved training then it loads the saved training
     model = joblib.load(model_path)
     vectorizer = joblib.load(vectorizer_path)
-else:
+else: #if there is no saved training it retrains itself
+    
     #gets the path to the zip file in the current folder
     zip_file_path = os.path.join(current_folder, 'trainingandtest.zip')
 
@@ -49,7 +50,8 @@ else:
         zip_ref.extractall(current_folder)
 
     # Now you can read the CSV file
-    #2 different files it could be trained off of from the zip file, the first one has 1.6 million samples but they are only negative and positive
+    #2 different files it could be trained off of from the zip file, 
+    #the first one has 1.6 million samples but they are only negative and positive
     #the second one has 498 samples but it has negative, neutral, and positive 
     #option 1
     CSV_file_path = os.path.join(current_folder, 'training.1600000.processed.noemoticon.csv') #gets the path to the CSV file after unzipping
