@@ -41,4 +41,4 @@ class TestSentimentAnalysis(unittest.TestCase):
         self.assertEqual(result, "negative")  # Expected to be negative
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main() # a lot of these will fail depending on which version of vectoriser is used: base, not, double negative
