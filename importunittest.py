@@ -28,7 +28,7 @@ class TestSentimentAnalysis(unittest.TestCase):
         result = analyze_sentiment("This product is not not good.")
         self.assertEqual(result, "positive")  # Expected to be positive
 
-    def test_double_negative(self):
+    def test_double_negative_negative(self):
         result = analyze_sentiment("This product is not not bad.")
         self.assertEqual(result, "negative")  # Expected to be negative
     
