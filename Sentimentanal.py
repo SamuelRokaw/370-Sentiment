@@ -5,10 +5,10 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-import zipfile 
+import zipfile
 import os #needed to handle file paths
-import joblib  # Import joblib for saving/loading training
-import re
+import joblib  # Import joblib for saving/loading models
+
 
 def preprocess_text(text): # this adds not to the vectorizer so "not good" is detected as a negative review instead of a positive review
     # Tokenize the text
@@ -28,6 +28,23 @@ def preprocess_text(text): # this adds not to the vectorizer so "not good" is de
             processed_tokens.append(token)
 
     return ' '.join(processed_tokens)
+# def preprocess_text(text): #double negative version
+#     # Tokenize the text
+#     tokens = word_tokenize(text)
+#     negation_words = {'not', "n't", 'no', 'never'}
+#     processed_tokens = []
+#     negate = False
+
+#     for token in tokens:
+#         if token in negation_words:
+#             negate = not negate
+#             processed_tokens.append(token)
+#         elif negate:
+#             processed_tokens.append(f'NOT_{token}')
+#         else:
+#             processed_tokens.append(token)
+
+#     return ' '.join(processed_tokens)
 
 # Gets current folder directory
 current_folder = os.path.dirname(__file__)
@@ -35,28 +52,24 @@ current_folder = os.path.dirname(__file__)
 model_path = os.path.join(current_folder, 'sentiment_model.pkl')
 vectorizer_path = os.path.join(current_folder, 'vectorizer.pkl')
 
-if os.path.exists(model_path) and os.path.exists(vectorizer_path): #if there is saved training then it loads the saved training
+if os.path.exists(model_path) and os.path.exists(vectorizer_path):
     model = joblib.load(model_path)
     vectorizer = joblib.load(vectorizer_path)
-else: #if there is no saved training it retrains itself
-    
+else:
     #gets the path to the zip file in the current folder
     zip_file_path = os.path.join(current_folder, 'trainingandtest.zip')
-
-
 
     #unzip the Zip file
     with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
         zip_ref.extractall(current_folder)
 
     # Now you can read the CSV file
-    #2 different files it could be trained off of from the zip file, 
-    #the first one has 1.6 million samples but they are only negative and positive
+    #2 different files it could be trained off of from the zip file, the first one has 1.6 million samples but they are only negative and positive
     #the second one has 498 samples but it has negative, neutral, and positive 
     #option 1
     CSV_file_path = os.path.join(current_folder, 'training.1600000.processed.noemoticon.csv') #gets the path to the CSV file after unzipping
     #option 2
-    #CSV_file_path = os.path.join(current_folder, 'testdata.manual.2009.06.14.csv') #gets the path to the CSV file after unzipping
+    # CSV_file_path = os.path.join(current_folder, 'testdata.manual.2009.06.14.csv') #gets the path to the CSV file after unzipping
     df = pd.read_csv(CSV_file_path, encoding='latin-1', header=None)
 
     #Preprocess the data
@@ -76,7 +89,7 @@ else: #if there is no saved training it retrains itself
     X_test = vectorizer.transform(X_test)
 
     # Train the model
-    model = LogisticRegression()
+    model = LogisticRegression(max_iter=1600000)
     model.fit(X_train, y_train)
 
     # Save the trained model and vectorizer
@@ -96,5 +109,3 @@ def analyze_sentiment(text):
 
     # Return the sentiment prediction
     return prediction[0]
-
-
