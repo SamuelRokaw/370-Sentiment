@@ -17,9 +17,12 @@ The program analyzes input text and predicts whether the sentiment is positive o
 ### Known Limitations
 - **Double Negatives**: 
   - Example: "not not good" is classified as negative. The expected result is positive, but the model fails to account for the cancellation of the double negatives.
+        -The website runs off version A which will fail this case but included is the saved training data for verison B which can handle some cases of double negatives
 - **Ambiguous Sentence Structures**:
   - Example: "if you are thinking of buying this, don't buy it" is correctly classified as negative.
+        -The website runs off version A which will not fail this case but included is the saved training data for verison B which will fail
   - However, "if you are thinking of buying this, don't" is incorrectly classified as positive due to the sentence's structure.
+        -Both version A and B will fail this case
 
 ## Example Usage
 - Input: "This product is amazing!"

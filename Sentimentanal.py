@@ -10,7 +10,7 @@ import os #needed to handle file paths
 import joblib  # Import joblib for saving/loading models
 
 
-def preprocess_text(text): # this adds not to the vectorizer so "not good" is detected as a negative review instead of a positive review
+def preprocess_text(text): # this adds not to the vectorizer so "not good" is detected as a negative review instead of a positive review, Version A
     # Tokenize the text
     tokens = word_tokenize(text)
     negation_words = {'not', "n't", 'no', 'never'}
@@ -28,7 +28,7 @@ def preprocess_text(text): # this adds not to the vectorizer so "not good" is de
             processed_tokens.append(token)
 
     return ' '.join(processed_tokens)
-# def preprocess_text(text): #double negative version
+# def preprocess_text(text): #double negative version, Version B
 #     # Tokenize the text
 #     tokens = word_tokenize(text)
 #     negation_words = {'not', "n't", 'no', 'never'}
