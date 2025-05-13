@@ -4,7 +4,7 @@ from Sentimentanal import analyze_sentiment
 class TestSentimentAnalysis(unittest.TestCase):
     def test_1(self):
         result = analyze_sentiment("Oh fantastic, another bug. Just what I needed.")
-        self.assertEqual(result, "negative") #fails on version A and B
+        self.assertEqual(result, "negative") #fails on version A, B, C, and D
 
     def test_2(self):
         result = analyze_sentiment("The design is beautiful, but the app crashes too much.")
@@ -12,7 +12,7 @@ class TestSentimentAnalysis(unittest.TestCase):
 
     def test_3(self):
         result = analyze_sentiment("I don’t hate it.")
-        self.assertEqual(result, "positive") #fails on version A and B
+        self.assertEqual(result, "positive") #fails on version A, B, C, and D
 
     def test_4(self):
         result = analyze_sentiment("I used the app yesterday.")
@@ -47,7 +47,7 @@ class TestSentimentAnalysis(unittest.TestCase):
         self.assertEqual(result, "neutral") # will fail because model isn't trained on neutral
     def test_13(self):
         result = analyze_sentiment("It’s not bad at all.")
-        self.assertEqual(result, "positive")
+        self.assertEqual(result, "positive") # fails on version C
     def test_14(self):
         result = analyze_sentiment("I wouldn’t say it’s great.")
         self.assertEqual(result, "neutral") # will fail because model isn't trained on neutral
